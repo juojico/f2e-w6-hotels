@@ -20,6 +20,6 @@
 <div class="container">
   <Home />
   {#if !$onHome}
-    <RoomPage />
+    <RoomPage room='1'/>
   {/if}
 </div>

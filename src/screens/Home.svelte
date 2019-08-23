@@ -1,11 +1,18 @@
 <script>
   import { onMount } from 'svelte';
+<<<<<<< HEAD
   import { onHome, bgImgs, rooms } from '../store.js';
 	import ImgBox from '../components/ImgBox.svelte';
   import Carousel from '../components/Carousel.svelte';
 
   console.log(bgImgs, rooms);
 
+=======
+  import { onHome, onPage, BG_IMGS, MOCK_ROOMS, rooms } from '../store.js';
+	import ImgBox from '../components/ImgBox.svelte';
+  import Carousel from '../components/Carousel.svelte';
+
+>>>>>>> 27ea41bcf41a5ae647c155912d4a50eee91b29a7
   const getRooms = async () => {
     const res = await fetch('https://challenge.thef2e.com/api/thef2e2019/stage6/rooms',{
       method: 'GET',
@@ -15,13 +22,19 @@
         'Content-Type': 'application/json'
       }
     }).then(res=>res.json());
-    rooms = res.items;
+    rooms.set(res.items);
+    console.log(rooms);
   }
-  // onMount(()=>getRooms());
 
-  const onRoomClick = () => {
+  onMount(()=>{
+    rooms.set($MOCK_ROOMS);
+    // getRooms();
+  });
+
+  const onRoomClick = index => () => {
     onHome.set(false);
-    console.log('click',$onHome);
+    onPage.set(index);
+    console.log('click',$onHome, index);
   };
 
 </script>
@@ -31,6 +44,8 @@
     position: relative;
     width: 100%;
     height: 100%;
+    background-color: black;
+    overflow-y: auto;
   }
   .bg {
     position: absolute;
@@ -38,14 +53,19 @@
     height: 100%;
     top: 0;
     left: 0;
-    background-color: black;
-    z-index: -1;
+    opacity: 0.4;
+    z-index: 1;
   }
   .mainArea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 100%;
+    z-index: 10;
   }
 
   .area1 {
@@ -95,22 +115,16 @@
       </div>
     </div>
     <div class="area2">
-      <div>
-        {#await getRooms}
-          <p>資料讀取中...</p>
-        {:then res}
-          {#each rooms as room, i}
-            <div on:click={onRoomClick}>
-              <ImgBox {...room} />
-            </div>
-          {/each}
-        {/await}
-      </div>
+      {#each $rooms as room, i}
+        <div on:click={onRoomClick(i)}>
+          <ImgBox {...room} />
+        </div>
+      {/each}
     </div>
   </div>
 
   <div class="bg">
-    <Carousel {bgImgs} />
+    <Carousel imgs={$BG_IMGS} />
   </div>
 
 </div>

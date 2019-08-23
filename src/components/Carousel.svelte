@@ -1,14 +1,22 @@
 <script>
   export let imgs = [];
+  export let duration = 5000;
+  export let itemIndex = 0;
+  export let pause = false;
 
-  let i = 0;
-  setInterval(()=>{
+  let i = itemIndex;
+
+  const play = setInterval(()=>{
     if (i < imgs.length - 1) {
       i++;
     } else {
       i = 0;
     }
-  },5000)
+  }, duration)
+
+  if(pause) {
+    clearInterval(play);
+  }
 
 </script>
 
@@ -19,7 +27,6 @@
     height: 100%;
     background-size: cover;
     background-position: center;
-    opacity: 0.4;
     transition: 2s;
   }
   .close {
