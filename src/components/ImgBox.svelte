@@ -47,7 +47,7 @@
     }
   }
 
-  @media all and (max-width: 1000px) {
+  @media all and (max-width: 1080px) {
     .imgBox {
       width: 33.33%;
       height: 33.33vw;

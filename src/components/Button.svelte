@@ -4,6 +4,7 @@
   export let btnType = 'fill';
   export let text = '';
   export let fullWidth = false;
+  export let click = '';
 </script>
 
 <style type="text/scss">
@@ -12,7 +13,7 @@
     box-sizing: border-box;
     display: inline-block;
     margin: auto;;
-    padding: 0.5em 1em;
+    padding: 0.4em 3.5em 0.5em 3.5em;
     color: white;
     text-align: center;
     transition: 0.2s;
@@ -87,6 +88,6 @@
 
 </style>
 
-<div class={`btn ${fullWidth?'fullWidth':null} ${size} ${btnType} ${color}`}>
+<div class={`btn ${fullWidth?'fullWidth':null} ${size} ${btnType} ${color}`} on:click={click}>
   {text}
 </div>

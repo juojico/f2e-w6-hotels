@@ -4,17 +4,31 @@
   import { formatMoney } from '../utility.js'
   import Carousel from '../components/Carousel.svelte';
   import Button from '../components/Button.svelte';
+  import RoomDetails from '../components/RoomDetails.svelte';
+  import DialogBooking from '../components/DialogBooking.svelte';
 
   let room = $rooms[$onPage];
 
   const { id, name, normalDayPrice, holidayPrice, imageUrl } = room;
 
+  //取得今日價格並轉換為金額格式
   const today = new Date().getDay();
-
-  const price = formatMoney(today > 4 ? holidayPrice : normalDayPrice);
+  const normalPrice = formatMoney(normalDayPrice);
+  const highPrice = formatMoney(holidayPrice);
+  const price = today > 4 ? highPrice : normalPrice;
 
   const onBackClick = () => {
     onHome.set(true);
+  }
+
+  let dialogOpen = false;
+
+  const onBookingClick = () => {
+    dialogOpen = true;
+  }
+
+  const onBookingClose = () => {
+      dialogOpen = false;
   }
 
 </script>
@@ -47,7 +61,7 @@
   }
 
   .area1 {
-    position: absolute;
+    position: fixed;
     width: 40%;
     height: 100%;
     min-height: 12em;
@@ -56,13 +70,15 @@
     background-color: white;
   }
   .area2 {
+    box-sizing: border-box;
     position: absolute;
     width: 60%;
-    height: 100%;
-    min-height: 60%;
+    height: auto;
+    min-height: 100%;
     top: 0;
     left: 40%;
     background-color: white;
+    padding: 64px 28px 28px 28px;
   }
 
   .bookingBox {
@@ -71,6 +87,7 @@
     left: 50%;
     padding: 1em;
     font-size: 20px;
+    text-align: center;
     white-space: nowrap;
     background-color: rgba(255, 255, 255, .7);
     transform: translate(-50%, -50%);
@@ -93,25 +110,27 @@
       position: relative;
       width: 100%;
       left: 0;
-      height: auto;
+      min-height: 60%;
     }
   }
 
 </style>
 
 <div class="container">
-  <div class="navTop" on:click={onBackClick} ><img src={'img/icons/back.svg'}>查看其它房型</div>
-  <div class="area1" in:fly="{{ y: -300 }}" out:fly="{{ y: 300 }}">
+  {#if dialogOpen}
+    <DialogBooking name={name} normalPrice={normalPrice} highPrice={highPrice} close={onBookingClose} />
+  {/if}
+  <div class="area1" in:fly="{{ y: -300 }}" out:fly="{{ y: -300 }}">
+    <div class="navTop" on:click={onBackClick}>
+      <img src={'img/icons/back.svg'} alt="backToHome">查看其它房型
+    </div>
     <Carousel imgs={[imageUrl]} />
     <div class="bookingBox">
       <span>${price}</span>　/　1 晚
-      <Button text='Booking now' fullWidth />
+      <Button text='Booking now' fullWidth click={onBookingClick} />
     </div>
   </div>
-  <div class="area2" in:fly="{{ y: 300 }}" out:fly="{{ y: -300 }}">
-
-    <span>RoomInfo {$onPage}</span>
-    normalDayPrice {normalDayPrice}
-    holidayPrice {holidayPrice}
+  <div class="area2" in:fly="{{ y: 300 }}" out:fly="{{ y: 300 }}">
+    <RoomDetails name={name} normalPrice={normalPrice} highPrice={highPrice} />
   </div>
 </div>

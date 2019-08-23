@@ -4,11 +4,6 @@ export const onHome = writable(true);
 export const onPage = writable(true);
 export const rooms = writable([]);
 
-<<<<<<< HEAD
-export const rooms = readable(MOCK_ROOMS);
-
-export const bgImgs = readable(BG_IMGS);
-=======
 export const MOCK_ROOMS = readable([
   {
     imageUrl:'img/room1/photo-1515511856280-7b23f68d2996.jpeg',
@@ -60,4 +55,20 @@ export const BG_IMGS = readable([
   'img/house/photo-1507149833265-60c372daea22.jpeg',
   'img/house/photo-1523217582562-09d0def993a6.jpeg'
 ]);
->>>>>>> 27ea41bcf41a5ae647c155912d4a50eee91b29a7
+
+export const FEATURE_NAME = readable(['早餐','Mini Bar','Room Service','Wifi','適合兒童','電話','漂亮的視野','冰箱','沙發','攜帶寵物','全面禁菸','空調']);
+
+export const FEATURE_ICONS = readable([
+  'img/icons/room/icons-breakfast.svg',
+  'img/icons/room/icons-poolsideBar.svg',
+  'img/icons/room/icons-roomService.svg',
+  'img/icons/room/icons-wifi.svg',
+  'img/icons/room/icons-child.svg',
+  'img/icons/room/icons-phone.svg',
+  'img/icons/room/icons-goodView.svg',
+  'img/icons/room/icons-refrigerator.svg',
+  'img/icons/room/icons-sofa.svg',
+  'img/icons/room/icons-pets.svg',
+  'img/icons/room/icons-noSmoking.svg',
+  'img/icons/room/icons-airShaft.svg',
+]);
