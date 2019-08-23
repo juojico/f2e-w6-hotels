@@ -7,6 +7,6 @@ const MOCK_ROOMS = [{imageUrl:'img/room1/photo-1515511856280-7b23f68d2996.jpeg'}
 
 export const onHome = writable(true);
 
-export rooms = readable(MOCK_ROOMS);
+export const rooms = readable(MOCK_ROOMS);
 
-export bgImgs = readable(BG_IMGS);
+export const bgImgs = readable(BG_IMGS);

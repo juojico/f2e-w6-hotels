@@ -1,10 +1,11 @@
 <script>
   import { onMount } from 'svelte';
-  import { onHome, rooms, bgImgs } from '../store.js';
+  import { onHome, bgImgs, rooms } from '../store.js';
 	import ImgBox from '../components/ImgBox.svelte';
   import Carousel from '../components/Carousel.svelte';
 
-  let rooms = [];
+  console.log(bgImgs, rooms);
+
   const getRooms = async () => {
     const res = await fetch('https://challenge.thef2e.com/api/thef2e2019/stage6/rooms',{
       method: 'GET',
