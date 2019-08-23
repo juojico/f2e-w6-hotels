@@ -4,7 +4,6 @@
   export let normalDayPrice = '';
   export let holidayPrice = '';
   export let imageUrl = '';
-
 </script>
 
 <style type="text/scss">
@@ -50,14 +49,14 @@
 
   @media all and (max-width: 1000px) {
     .imgBox {
-      width: 33.33vw;
+      width: 33.33%;
       height: 33.33vw;
     }
   }
 
   @media all and (max-width: 480px) {
     .imgBox {
-      width: 50vw;
+      width: 50%;
       height: 50vw;
     }
   }
