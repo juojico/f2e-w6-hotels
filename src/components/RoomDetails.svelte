@@ -3,6 +3,7 @@
   export let normalPrice = '';
   export let highPrice = '';
   import { FEATURE_ICONS, FEATURE_NAME } from '../store.js';
+  import Calendar from './Calendar.svelte';
   const feature = [1,0,0,1,0,1,0,1,0,1,1,1];
 </script>
 
@@ -90,6 +91,6 @@
   </div>
   空房狀態查詢
   <div class="calendar">
-
+    <Calendar />
   </div>
 </div>
