@@ -1,11 +1,12 @@
 <script>
   import { fly } from 'svelte/transition';
   import { onHome, onPage, rooms } from '../store.js';
-  import { formatMoney } from '../utility.js'
+  import { formatMoney } from '../utility.js';
   import Carousel from '../components/Carousel.svelte';
   import Button from '../components/Button.svelte';
   import RoomDetails from '../components/RoomDetails.svelte';
   import DialogBooking from '../components/DialogBooking.svelte';
+  import DialogResult from '../components/DialogResult.svelte';
 
   let room = $rooms[$onPage];
 
@@ -15,20 +16,35 @@
   const today = new Date().getDay();
   const normalPrice = formatMoney(normalDayPrice);
   const highPrice = formatMoney(holidayPrice);
-  const price = today > 4 ? highPrice : normalPrice;
+  const price = today > 4 ? holidayPrice : normalDayPrice;
 
   const onBackClick = () => {
     onHome.set(true);
   }
 
+  //訂房結果
+  let result = true;
+
+  //dialog
   let dialogOpen = false;
+  let resultOpen = false;
 
   const onBookingClick = () => {
     dialogOpen = true;
   }
 
   const onBookingClose = () => {
-      dialogOpen = false;
+    dialogOpen = false;
+  }
+
+  const onBookingConfirm = () => {
+    dialogOpen = false;
+    resultOpen = true;
+  }
+
+  const onResultClose = () => {
+    resultOpen = false;
+    onHome.set(true);
   }
 
 </script>
@@ -54,7 +70,7 @@
     left: 10%;
     padding: 0.5em;
     cursor: pointer;
-    z-index: 30;
+    z-index: 25;
     img {
       margin: 0 10px;
     }
@@ -118,15 +134,18 @@
 
 <div class="container">
   {#if dialogOpen}
-    <DialogBooking name={name} normalPrice={normalPrice} highPrice={highPrice} close={onBookingClose} />
+    <DialogBooking name={name} price={price} normalPrice={normalPrice} highPrice={highPrice} close={onBookingClose} confirm={onBookingConfirm} />
+  {/if}
+  {#if resultOpen}
+    <DialogResult result={result} close={onResultClose} />
   {/if}
   <div class="area1" in:fly="{{ y: -300 }}" out:fly="{{ y: -300 }}">
     <div class="navTop" on:click={onBackClick}>
-      <img src={'img/icons/back.svg'} alt="backToHome">查看其它房型
+      <img src={'img/icons/icons-back.svg'} alt="backToHome">查看其它房型
     </div>
     <Carousel imgs={[imageUrl]} />
     <div class="bookingBox">
-      <span>${price}</span>　/　1 晚
+      <span>${formatMoney(price)}</span>　/　1 晚
       <Button text='Booking now' fullWidth click={onBookingClick} />
     </div>
   </div>

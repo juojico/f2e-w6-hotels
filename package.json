@@ -16,7 +16,9 @@
   "dependencies": {
     "moment": "^2.24.0",
     "sirv-cli": "^0.4.4",
-    "svelte-preprocess": "^2.15.1"
+    "svelte-calendar": "^1.0.8",
+    "svelte-preprocess": "^2.15.1",
+    "timeUtils": "^1.1.5"
   },
   "scripts": {
     "build": "rollup -c",

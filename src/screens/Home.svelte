@@ -14,18 +14,16 @@
       }
     }).then(res=>res.json());
     rooms.set(res.items);
-    console.log(rooms);
   }
 
   onMount(()=>{
     rooms.set($MOCK_ROOMS);
-    // getRooms();
+    getRooms();
   });
 
   const onRoomClick = index => () => {
     onHome.set(false);
     onPage.set(index);
-    console.log('click',$onHome, index);
   };
 
 </script>

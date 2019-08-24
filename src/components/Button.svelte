@@ -12,7 +12,7 @@
   .btn {
     box-sizing: border-box;
     display: inline-block;
-    margin: auto;;
+    margin: auto;
     padding: 0.4em 3.5em 0.5em 3.5em;
     color: white;
     text-align: center;
