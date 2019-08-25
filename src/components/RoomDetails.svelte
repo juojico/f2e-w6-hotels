@@ -3,15 +3,18 @@
   export let normalPrice = '';
   export let highPrice = '';
   import moment from 'moment';
-  import { FEATURE_ICONS, FEATURE_NAME } from '../store.js';
+  import { onMount } from 'svelte';
+  import { FEATURE_ICONS, FEATURE_NAME, selectDay } from '../store.js';
   import Calendar from './Calendar.svelte';
   const feature = [1,0,0,1,0,1,0,1,0,1,1,1];
-  let selectDay = moment().add(1,'d').format('YYYY-MM-DD');
 
   const onSelect = pickDay => {
-    console.log(pickDay);
-    selectDay = pickDay;
+    selectDay.set(pickDay);
   }
+
+  onMount(()=>{
+    selectDay.set(moment().add(1,'d').format('YYYY-MM-DD'));
+  });
 
 </script>
 
@@ -114,7 +117,7 @@
 
   <p>空房狀態查詢</p>
   <div class="calendar">
-    <Calendar onSelect={onSelect} bind:selectDay />
-    <Calendar month={moment().add(1, 'M')} onSelect={onSelect} bind:selectDay />
+    <Calendar onSelect={onSelect} />
+    <Calendar month={moment().add(1, 'M')} onSelect={onSelect} />
   </div>
 </div>

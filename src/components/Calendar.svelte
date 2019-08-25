@@ -1,16 +1,15 @@
 <script>
-  export let selectDay = '';
   export let onSelect = () => {};
   export let month = moment();
   export let open = true;
   import moment from 'moment';
+  import { selectDay } from '../store.js';
 
   let year = month.format('YYYY');
   let today = moment();
   let thisMonthStartDate = month.startOf('month').day();
   let thisMonthEnd = month.endOf('month').format('DD');
   const daysName = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'St']
-
 
   let thisMonth = [];
   thisMonth.length = thisMonthStartDate;
@@ -95,7 +94,7 @@
       {/each}
       {#each thisMonth as day}
         {#if day}
-          {#if selectDay===(month.format('YYYY-MM-')+day)}
+          {#if $selectDay===(month.format('YYYY-MM-')+day)}
             <div><span class="select">{day}</span></div>
           {:else}
             {#if today.format('MM')===month.format('MM')}

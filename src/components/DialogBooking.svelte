@@ -5,29 +5,75 @@
   export let highPrice = '';
   export let close = '';
   export let confirm = '';
-  import { FEATURE_ICONS, FEATURE_NAME } from '../store.js';
-  import { formatMoney } from '../utility.js';
   import moment from 'moment';
+  import { FEATURE_ICONS, FEATURE_NAME, selectDay } from '../store.js';
+  import { formatMoney } from '../utility.js';
   import Button from './Button.svelte';
   import Input from './Input.svelte';
   const feature = [1,0,0,1,0,1,0,1,0,1,1,1];
 
-  let defaultDay = moment().add(1,'d');
-
-  let date1 = moment(defaultDay).format('DDD');
-  let date2 = moment(defaultDay).format('DDD');
+  let error = '';
+  let date1 = moment($selectDay, 'YYYY-MM-DD').format('DDD');
+  let date2 = moment($selectDay, 'YYYY-MM-DD').format('DDD');
   let totalDays = 1;
-  let totalPrice = totalDays * price;
+  let totalPrice = 0;
+  let date1day = 0;
+  let normalDay = 0;
+  let holiday = 0;
+
+  const countTotal = () => {
+    console.log($selectDay,date1day,totalDays,normalPrice,highPrice);
+
+    let remaDays = totalDays % 7;
+    let remaHolidays = 0;
+
+    if(date1day+remaDays>6){
+      if (date1day===6){
+        remaHolidays = 1;
+      } else {
+        remaHolidays = 2;
+      }
+    } else if(date1day+remaDays===6) {
+      remaHolidays = 1;
+    }
+
+
+    holiday = Math.floor(totalDays / 7) * 2 + remaHolidays;
+
+    normalDay = totalDays - holiday;
+
+
+    if(totalDays > 0) {
+      totalPrice = formatMoney(holiday * highPrice + normalDay * normalPrice);
+    } else {
+      totalPrice = 0;
+    }
+
+    console.log(normalDay,holiday,totalPrice);
+
+  }
+  countTotal();
 
   const onChange1 = value =>{
     date1 = moment(value).format('DDD');
+    date1day = moment(value).day();
     totalDays = date2 - date1 + 1;
-    totalPrice = totalDays * price;
+    if(totalDays < 1){
+      error = "請選擇正確日期";
+    } else {
+      error = '';
+    }
+    countTotal();
   }
   const onChange2 = value =>{
     date2 = moment(value).format('DDD');
     totalDays = date2 - date1 + 1;
-    totalPrice = totalDays * price;
+    if(totalDays < 1){
+      error = "請選擇正確日期";
+    } else {
+      error = '';
+    }
+    countTotal();
   }
 
 </script>
@@ -83,8 +129,9 @@
 
   .close {
     position: absolute;
-    top: 38px;
-    right: 38px;
+    padding: 10px;
+    top: 28px;
+    right: 28px;
     cursor: pointer;
   }
 
@@ -185,10 +232,16 @@
     <div class="area1">
       <Input label='姓名' />
       <Input label='手機號碼' />
-      <Input label='入住日期' type="date" value={defaultDay.format('YYYY-MM-DD')} onChange={onChange1} />
-      <Input label='退房日期' type="date" value={defaultDay.format('YYYY-MM-DD')} onChange={onChange2} />
-      <div class="totalDays">{totalDays} 天，1 晚平日</div>
-      <div class="totalMoney">總計<h1>$ {formatMoney(totalPrice)}</h1></div>
+      <Input label='入住日期' type="date" value={$selectDay} onChange={onChange1} />
+      <Input label='退房日期' type="date" value={$selectDay} onChange={onChange2} />
+      <div class="totalDays">
+        {#if error}
+          {error}
+        {:else}
+          {totalDays} 天，{normalDay} 晚平日
+        {/if}
+      </div>
+      <div class="totalMoney">總計<h1>$ {totalPrice}</h1></div>
       <Button text='確認送出' btnType='outline' color='white' fullWidth click={confirm} />
       <p class="note">此預約系統僅預約功能，並不會對您進行收費</p>
     </div>
@@ -199,7 +252,7 @@
       <div class='content'>
         <div class="descript">
           <p>1人・ 單人床・ 附早餐・衛浴1間・18平方公尺</p>
-          <p>平日（一～四）價格：{normalPrice}  /  假日（五〜日）價格：{highPrice}</p>
+          <p>平日（一～四）價格：{formatMoney(normalPrice)}  /  假日（五〜日）價格：{formatMoney(highPrice)}</p>
         </div>
         <div class="feature">
           {#each feature as has, index}

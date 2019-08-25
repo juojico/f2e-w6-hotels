@@ -134,7 +134,14 @@
 
 <div class="container">
   {#if dialogOpen}
-    <DialogBooking name={name} price={price} normalPrice={normalPrice} highPrice={highPrice} close={onBookingClose} confirm={onBookingConfirm} />
+    <DialogBooking
+      name={name}
+      price={price}
+      normalPrice={normalDayPrice}
+      highPrice={holidayPrice}
+      close={onBookingClose}
+      confirm={onBookingConfirm}
+    />
   {/if}
   {#if resultOpen}
     <DialogResult result={result} close={onResultClose} />
