@@ -7,13 +7,14 @@
 <style type="text/scss">
 
   .container {
-    position: fixed;
+    position: sticky;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
     min-height: 100%;
+    top: 0;
     background-color: rgba(125, 125, 125, 0.2);
     backdrop-filter: blur(2px);
     z-index: 30;

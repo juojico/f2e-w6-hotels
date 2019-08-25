@@ -2,9 +2,17 @@
   export let name = '';
   export let normalPrice = '';
   export let highPrice = '';
+  import moment from 'moment';
   import { FEATURE_ICONS, FEATURE_NAME } from '../store.js';
   import Calendar from './Calendar.svelte';
   const feature = [1,0,0,1,0,1,0,1,0,1,1,1];
+  let selectDay = moment().add(1,'d').format('YYYY-MM-DD');
+
+  const onSelect = pickDay => {
+    console.log(pickDay);
+    selectDay = pickDay;
+  }
+
 </script>
 
 <style type="text/scss">
@@ -54,6 +62,20 @@
     }
   }
 
+  .calendar {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    padding: 10px;
+    border: 1px solid #38470B;
+  }
+
+  @media all and (max-width: 1080px) {
+    .calendar {
+      flex-direction: column;
+    }
+  }
+
   @media all and (max-width: 480px) {
     .title {
       flex-direction: column;
@@ -89,8 +111,10 @@
       {/each}
     </div>
   </div>
-  空房狀態查詢
+
+  <p>空房狀態查詢</p>
   <div class="calendar">
-    <Calendar />
+    <Calendar onSelect={onSelect} bind:selectDay />
+    <Calendar month={moment().add(1, 'M')} onSelect={onSelect} bind:selectDay />
   </div>
 </div>

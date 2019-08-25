@@ -18,7 +18,7 @@
 
   onMount(()=>{
     rooms.set($MOCK_ROOMS);
-    getRooms();
+    // getRooms();
   });
 
   const onRoomClick = index => () => {
