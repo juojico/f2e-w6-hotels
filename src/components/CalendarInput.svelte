@@ -27,11 +27,7 @@
     position: absolute;
     top: 0;
     left: 0;
-<<<<<<< HEAD
     min-width: 100%;
-=======
-    width: 100%;
->>>>>>> ae48720af8cfe2f30343fc45cbc95cb5c9866b55
     padding: 10px;
     background: white;
     border: 1px solid #38470B;
