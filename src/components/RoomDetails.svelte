@@ -15,7 +15,7 @@
 
   onMount(()=>{
     selectDay.set(moment().add(1,'d').format('YYYY-MM-DD'));
-    selectDay2.set(moment().add(1,'d').format('YYYY-MM-DD'));
+    selectDay2.set(moment().add(2,'d').format('YYYY-MM-DD'));
   });
 
 </script>

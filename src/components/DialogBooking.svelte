@@ -15,7 +15,7 @@
 
   let error = '';
   let date1 = moment($selectDay, 'YYYY-MM-DD').format('DDD');
-  let date2 = moment($selectDay, 'YYYY-MM-DD').format('DDD');
+  let date2 = moment($selectDay2, 'YYYY-MM-DD').format('DDD');
   let totalDays = 1;
   let totalPrice = 0;
   let date1day = 0;
@@ -23,7 +23,6 @@
   let holiday = 0;
 
   const countTotal = () => {
-    console.log($selectDay,date1day,totalDays,normalPrice,highPrice);
 
     let remaDays = totalDays % 7;
     let remaHolidays = 0;
@@ -38,19 +37,14 @@
       remaHolidays = 1;
     }
 
-
     holiday = Math.floor(totalDays / 7) * 2 + remaHolidays;
-
     normalDay = totalDays - holiday;
-
 
     if(totalDays > 0) {
       totalPrice = formatMoney(holiday * highPrice + normalDay * normalPrice);
     } else {
       totalPrice = 0;
     }
-
-    console.log(normalDay,holiday,totalPrice);
 
   }
   countTotal();
@@ -59,7 +53,7 @@
     selectDay.set(value);
     date1 = moment(value).format('DDD');
     date1day = moment(value).day();
-    totalDays = date2 - date1 + 1;
+    totalDays = date2 - date1;
     if(totalDays < 1){
       error = "請選擇正確日期";
     } else {
@@ -70,7 +64,7 @@
   const onChange2 = value =>{
     selectDay2.set(value);
     date2 = moment(value).format('DDD');
-    totalDays = date2 - date1 + 1;
+    totalDays = date2 - date1;
     if(totalDays < 1){
       error = "請選擇正確日期";
     } else {
