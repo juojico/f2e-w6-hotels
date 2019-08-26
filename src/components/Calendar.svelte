@@ -1,9 +1,10 @@
 <script>
   export let onSelect = () => {};
   export let month = moment();
+  export let endDay = false;
   export let open = true;
   import moment from 'moment';
-  import { selectDay } from '../store.js';
+  import { selectDay, selectDay2 } from '../store.js';
 
   let year = month.format('YYYY');
   let today = moment();
@@ -15,6 +16,11 @@
   thisMonth.length = thisMonthStartDate;
   for (let i=1;i<=thisMonthEnd;i++) {
     thisMonth.push(i);
+  }
+
+  let beforeDay = today.format('DD');
+  if(endDay) {
+    beforeDay = moment($selectDay).format('DD');
   }
 
 </script>
@@ -42,7 +48,7 @@
       color: #38470B;
       span {
         position: relative;
-        padding: 12px 10px;
+        padding: 12px 8px;
         user-select: none;
         cursor: pointer;
       }
@@ -83,6 +89,23 @@
     }
   }
 
+  @media all and (max-width: 480px) {
+    .datePickerArea {
+      padding: 4px;
+    }
+    .calBody {
+      padding: 6px;
+      .tableBody {
+        span {
+          padding: 6px 4px;
+        }
+        .select {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
 </style>
 
 <div class='datePickerArea'>
@@ -94,11 +117,11 @@
       {/each}
       {#each thisMonth as day}
         {#if day}
-          {#if $selectDay===(month.format('YYYY-MM-')+day)}
+          {#if (endDay?$selectDay2:$selectDay)===(month.format('YYYY-MM-')+day)}
             <div><span class="select">{day}</span></div>
           {:else}
             {#if today.format('MM')===month.format('MM')}
-              {#if day < today.format('DD')}
+              {#if day < beforeDay}
                 <span class="disable">{day}</span>
               {:else if day == today.format('DD') }
                 <span class="today" on:click={()=>onSelect(month.format('YYYY-MM-')+day)}>{day}</span>

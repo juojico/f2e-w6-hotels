@@ -6,10 +6,11 @@
   export let close = '';
   export let confirm = '';
   import moment from 'moment';
-  import { FEATURE_ICONS, FEATURE_NAME, selectDay } from '../store.js';
+  import { FEATURE_ICONS, FEATURE_NAME, selectDay, selectDay2 } from '../store.js';
   import { formatMoney } from '../utility.js';
   import Button from './Button.svelte';
   import Input from './Input.svelte';
+  import CalendarInput from './CalendarInput.svelte';
   const feature = [1,0,0,1,0,1,0,1,0,1,1,1];
 
   let error = '';
@@ -55,6 +56,7 @@
   countTotal();
 
   const onChange1 = value =>{
+    selectDay.set(value);
     date1 = moment(value).format('DDD');
     date1day = moment(value).day();
     totalDays = date2 - date1 + 1;
@@ -66,6 +68,7 @@
     countTotal();
   }
   const onChange2 = value =>{
+    selectDay2.set(value);
     date2 = moment(value).format('DDD');
     totalDays = date2 - date1 + 1;
     if(totalDays < 1){
@@ -232,8 +235,8 @@
     <div class="area1">
       <Input label='姓名' />
       <Input label='手機號碼' />
-      <Input label='入住日期' type="date" value={$selectDay} onChange={onChange1} />
-      <Input label='退房日期' type="date" value={$selectDay} onChange={onChange2} />
+      <CalendarInput label="入住日期" value={$selectDay} onSelect={onChange1} />
+      <CalendarInput label="退房日期" value={$selectDay2} onSelect={onChange2} endDay />
       <div class="totalDays">
         {#if error}
           {error}

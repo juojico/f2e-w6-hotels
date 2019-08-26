@@ -12,7 +12,7 @@
     position: relative;
     width: 275px;
     height: 275px;
-    background-size: 100%;
+    background-size: cover;
     background-position: bottom;
     float: left;
     transition: 1s;

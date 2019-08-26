@@ -127,6 +127,13 @@
       width: 100%;
       left: 0;
       min-height: 60%;
+      padding: 24px;
+    }
+  }
+
+  @media all and (max-width: 480px) {
+    .area2 {
+      padding: 14px;
     }
   }
 
