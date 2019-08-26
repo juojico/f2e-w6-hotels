@@ -4,6 +4,7 @@ export const onHome = writable(true);
 export const onPage = writable(true);
 export const rooms = writable([]);
 export const selectDay = writable('2019-08-25');
+export const selectDay2 = writable('2019-08-25');
 
 export const MOCK_ROOMS = readable([
   {

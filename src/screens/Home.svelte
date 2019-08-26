@@ -102,6 +102,7 @@
 <div class="container">
 
   <div class="mainArea">
+
     <div class="area1" >
       <div class="logo"><img src={'img/logo.svg'} alt='好室旅店logo'></div>
       <div class="info">

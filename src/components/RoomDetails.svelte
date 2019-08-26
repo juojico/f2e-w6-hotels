@@ -4,16 +4,18 @@
   export let highPrice = '';
   import moment from 'moment';
   import { onMount } from 'svelte';
-  import { FEATURE_ICONS, FEATURE_NAME, selectDay } from '../store.js';
+  import { FEATURE_ICONS, FEATURE_NAME, selectDay, selectDay2 } from '../store.js';
   import Calendar from './Calendar.svelte';
   const feature = [1,0,0,1,0,1,0,1,0,1,1,1];
 
   const onSelect = pickDay => {
     selectDay.set(pickDay);
+    selectDay2.set(pickDay);
   }
 
   onMount(()=>{
     selectDay.set(moment().add(1,'d').format('YYYY-MM-DD'));
+    selectDay2.set(moment().add(1,'d').format('YYYY-MM-DD'));
   });
 
 </script>
@@ -86,6 +88,13 @@
         margin-top: -20px;
         margin-bottom: 12px;
       }
+    }
+    .featureIcon {
+      margin: 8px;
+    }
+    .calendar {
+      padding: 4px;
+      overflow-x: auto;
     }
   }
 

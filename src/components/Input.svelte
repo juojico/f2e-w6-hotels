@@ -5,6 +5,7 @@
   export let placeholder = '';
   export let value = '';
   export let fullWidth = false;
+  export let readonly = false;
   export let type = 'text';
   export let onChange = ()=>{};
 </script>
@@ -40,4 +41,4 @@
 </style>
 
 <label class={color}>{label}</label>
-<input {name} {type} class={fullWidth?'fullWidth':null} {placeholder} {value} on:change={()=>onChange(this.value)} />
+<input {name} {type} class={fullWidth?'fullWidth':null} {placeholder} {value} {readonly} on:change={()=>onChange(this.value)} />
